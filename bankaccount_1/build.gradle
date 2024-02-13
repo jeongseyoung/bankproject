@@ -1,0 +1,56 @@
+plugins {
+	id 'java'
+	id 'war'
+	id 'org.springframework.boot' version '3.1.7'
+	id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	
+	runtimeOnly 'com.mysql:mysql-connector-j'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	annotationProcessor 'org.projectlombok:lombok'
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	     
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2' // JUnit 5
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+	testImplementation 'org.mockito:mockito-core:3.11.2'
+	// https://mvnrepository.com/artifact/org.modelmapper/modelmapper
+	implementation 'org.modelmapper:modelmapper:3.2.0'
+
+	implementation 'org.mindrot:jbcrypt:0.4'
+
+	implementation 'com.google.code.gson:gson:2.8.9'
+	implementation 'com.jayway.jsonpath:json-path-assert:2.6.0'
+
+}
+
+tasks.named('bootBuildImage') {
+	builder = 'paketobuildpacks/builder-jammy-base:latest'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

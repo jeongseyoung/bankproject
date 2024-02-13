@@ -1,0 +1,30 @@
+server:
+  port: 8099
+  servlet:
+    encoding:
+      enabled: true
+      charset: UTF-8
+      force: true
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mysqltest01?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul
+    username: root
+    password: my-secret-pw
+
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+      dialect: org.hibernate.dialect.MySQLDialect
+
+jwt:
+  key: "sdf90s8df7s09fsdf09sdfsd0f92m309sdjfs0d9fjs09gjs09f"
+
