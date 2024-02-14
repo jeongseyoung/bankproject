@@ -9,9 +9,7 @@ import com.atm.bankaccount_1.entity.BankAccountEntity;
 import com.atm.bankaccount_1.entity.UserEntity;
 import com.atm.bankaccount_1.repository.BankAccountRepository;
 import com.atm.bankaccount_1.repository.UserRepository;
-import com.atm.bankaccount_1.utils.exception.CustomException;
 
-//import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -35,7 +33,7 @@ public class SignUpService {
     public UserDto signup(UserDto userDto) {
         String account = createAccount();
         UserEntity userEntity = mapToUserEntity(userDto);
-        BankAccountEntity bankAccountEntity = mapToBankAccountEntity();
+        BankAccountEntity bankAccountEntity = mapToBankAccountEntity(userEntity);
 
         // stream?
         if (!checkAccount(account)) {
@@ -102,11 +100,12 @@ public class SignUpService {
         return userDto;
     }
 
-    public BankAccountEntity mapToBankAccountEntity() {
+    public BankAccountEntity mapToBankAccountEntity(UserEntity userEntity) {
         BankAccountEntity bankAccountEntity = BankAccountEntity.builder()
                 .deposit(0)
                 .withdraw(0)
                 .balance(0)
+                .userEntity(userEntity)
                 .build();
         return bankAccountEntity;
     }
