@@ -26,7 +26,7 @@ public class Depo_Withdrawal_Service {
             Exception.class, CustomException.class
     })
     public BankAccountDto transfer(BankAccountDto bankAccountDto) {
-
+        // A = 나, B = 상대
         BankAccountEntity person_A = findAccount_BankAccountEntity(bankAccountDto.getMyaccount());
         BankAccountEntity person_B = findAccount_BankAccountEntity(bankAccountDto.getOpponent_account());
 
@@ -61,6 +61,7 @@ public class Depo_Withdrawal_Service {
         } catch (Exception e) {
             throw new CustomException("이체 실패, 사유: " + e.getMessage(), ErrorCode.TRANSFER_FAILED);
         }
+
         return mapToBankAccountDto(person_A);
     }
 
@@ -88,7 +89,6 @@ public class Depo_Withdrawal_Service {
 
     // 비번확인
     public boolean checkPw(String pw, String hashedPw) {
-        System.out.println("BCrypt.checkpw(pw, hashedPw): " + BCrypt.checkpw(pw, hashedPw));
         return BCrypt.checkpw(pw, hashedPw);
     }
 
@@ -101,5 +101,4 @@ public class Depo_Withdrawal_Service {
                 .build();
         return bankAccountDto;
     }
-
 }
