@@ -31,9 +31,10 @@ public class SignUpService {
      */
     @Transactional(rollbackFor = { Exception.class })
     public UserDto signup(UserDto userDto) {
+        String pw = encodePassword(userDto.getPassword()); // 비밀번호 Bcrypt로 암호화
         String account = createAccount();
-        UserEntity userEntity = mapToUserEntity(userDto);
-        BankAccountEntity bankAccountEntity = mapToBankAccountEntity(userEntity);
+        UserEntity userEntity = mapToUserEntity(userDto, pw);
+        BankAccountEntity bankAccountEntity = mapToBankAccountEntity(userEntity, pw);
 
         // stream?
         if (!checkAccount(account)) {
@@ -45,6 +46,7 @@ public class SignUpService {
             bankAccountEntity.setAccount(account);
         }
         bankAccountRepository.save(bankAccountEntity);
+
         return mapToUserDto(userRepository.save(userEntity));
     }
 
@@ -73,8 +75,8 @@ public class SignUpService {
     /*
      * Dto -> Entity
      */
-    public UserEntity mapToUserEntity(UserDto userDto) {
-        String pw = BCrypt.hashpw(userDto.getPassword(), BCrypt.gensalt()); // 비밀번호 Bcrypt로 암호화
+    public UserEntity mapToUserEntity(UserDto userDto, String pw) {
+
         UserEntity userEntity = UserEntity.builder()
                 .name(userDto.getName())
                 .password(pw)
@@ -100,13 +102,19 @@ public class SignUpService {
         return userDto;
     }
 
-    public BankAccountEntity mapToBankAccountEntity(UserEntity userEntity) {
+    public BankAccountEntity mapToBankAccountEntity(UserEntity userEntity, String pw) {
         BankAccountEntity bankAccountEntity = BankAccountEntity.builder()
+                .password(pw)
                 .deposit(0)
-                .withdraw(0)
+                .withdrawal(0)
                 .balance(0)
                 .userEntity(userEntity)
                 .build();
         return bankAccountEntity;
+    }
+
+    // 비밀번호 암호화
+    public String encodePassword(String pw) {
+        return BCrypt.hashpw(pw, BCrypt.gensalt());
     }
 }

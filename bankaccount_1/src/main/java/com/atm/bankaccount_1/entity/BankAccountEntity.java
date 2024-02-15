@@ -29,9 +29,10 @@ public class BankAccountEntity {
     @GeneratedValue
     private int id;
     private String account; // 계좌
+    private String password;
 
+    private int transfer; // 이체
     private int deposit; // 입금
-    private int withdraw; // 출금
     private int withdrawal;
     private int balance; // 잔고
 

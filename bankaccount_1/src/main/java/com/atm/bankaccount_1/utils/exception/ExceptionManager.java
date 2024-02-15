@@ -10,6 +10,6 @@ public class ExceptionManager extends RuntimeException {
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<?> CustomExceptionHandler(CustomException e) {
         return ResponseEntity.status(e.getErrorCode().getHttpStatus())
-                .body(e.getErrorCode().name() + " 낄 " + e.getErrorCode().getMessage());
+                .body(e.getErrorCode().name() + e.getErrorCode().getMessage());
     }
 }
