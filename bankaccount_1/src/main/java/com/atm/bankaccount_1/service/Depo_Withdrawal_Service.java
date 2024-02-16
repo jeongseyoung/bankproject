@@ -99,12 +99,14 @@ public class Depo_Withdrawal_Service {
     public BankAccountDto withdrawal(BankAccountDto bankAccountDto) {
         BankAccountEntity bankAccountEntity = findAccount_BankAccountEntity(bankAccountDto.getMyaccount());
         UserEntity userEntity = findAccount_UserEntity(bankAccountDto.getMyaccount());
-
+        // 비밀번호 체크
         if (checkPw(bankAccountDto.getPassword(), userEntity.getPassword())) {
             int balance = bankAccountEntity.getBalance();
+            // 잔고 확인 후 잔고 부족하면 exception
             if (balance == 0 || balance < bankAccountDto.getWithdrawalFee()) {
                 throw new CustomException("잔고 부족", ErrorCode.INSUFFICENT_BALANCE);
             }
+            // 내 잔고에서 출금 요청 금액을 빼줌.
             balance -= bankAccountDto.getWithdrawalFee();
 
             bankAccountEntity.setBalance(balance);
