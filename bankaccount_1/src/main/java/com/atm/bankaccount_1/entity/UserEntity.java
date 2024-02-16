@@ -34,7 +34,7 @@ public class UserEntity {
     private String email;
     private String phone;
     private String account;
-    private int balance; // 잔고
+    // private int balance; // 잔고
     @CreationTimestamp
     private Date signUpDate;
 

@@ -30,8 +30,8 @@ public class Depo_Withdrawal_Service {
         BankAccountEntity person_A = findAccount_BankAccountEntity(bankAccountDto.getMyaccount());
         BankAccountEntity person_B = findAccount_BankAccountEntity(bankAccountDto.getOpponent_account());
 
-        UserEntity A = findAccount_UserEntity(bankAccountDto.getMyaccount());
-        UserEntity B = findAccount_UserEntity(bankAccountDto.getOpponent_account());
+        // UserEntity A = findAccount_UserEntity(bankAccountDto.getMyaccount());
+        // UserEntity B = findAccount_UserEntity(bankAccountDto.getOpponent_account());
 
         // try { //비밀번호 체크 -> 틀리면 exception
         if (checkPw(bankAccountDto.getPassword(), person_A.getPassword())) {
@@ -52,13 +52,13 @@ public class Depo_Withdrawal_Service {
 
             person_A.setBalance(person_A_balance);
             person_B.setBalance(person_B_balance);
-            A.setBalance(person_A_balance);
-            B.setBalance(person_B_balance);
+            // A.setBalance(person_A_balance);
+            // B.setBalance(person_B_balance);
 
             bankAccountRepository.save(person_A);
             bankAccountRepository.save(person_B);
-            userRepository.save(A);
-            userRepository.save(B);
+            // userRepository.save(A);
+            // userRepository.save(B);
 
         } else {
             throw new CustomException("비밀번호가 일치하지 않습니다.", ErrorCode.PASSWORD_INCORRECT);
@@ -77,17 +77,18 @@ public class Depo_Withdrawal_Service {
     })
     public BankAccountDto deposit(BankAccountDto bankAccountDto) {
         BankAccountEntity bankAccountEntity = findAccount_BankAccountEntity(bankAccountDto.getMyaccount());
-        UserEntity userEntity = findAccount_UserEntity(bankAccountDto.getMyaccount());
+        // UserEntity userEntity =
+        // findAccount_UserEntity(bankAccountDto.getMyaccount());
 
-        if (checkPw(bankAccountDto.getPassword(), userEntity.getPassword())) {
+        if (checkPw(bankAccountDto.getPassword(), bankAccountEntity.getPassword())) {
             int balance = bankAccountEntity.getBalance();
             balance += bankAccountDto.getDepositFee();
 
             bankAccountEntity.setBalance(balance);
-            userEntity.setBalance(balance);
+            // userEntity.setBalance(balance);
 
             bankAccountRepository.save(bankAccountEntity);
-            userRepository.save(userEntity);
+            // userRepository.save(userEntity);
 
         } else {
             throw new CustomException("비밀번호가 일치하지 않습니다.", ErrorCode.PASSWORD_INCORRECT);
@@ -101,9 +102,10 @@ public class Depo_Withdrawal_Service {
     })
     public BankAccountDto withdrawal(BankAccountDto bankAccountDto) {
         BankAccountEntity bankAccountEntity = findAccount_BankAccountEntity(bankAccountDto.getMyaccount());
-        UserEntity userEntity = findAccount_UserEntity(bankAccountDto.getMyaccount());
+        // UserEntity userEntity =
+        // findAccount_UserEntity(bankAccountDto.getMyaccount());
         // 비밀번호 체크
-        if (checkPw(bankAccountDto.getPassword(), userEntity.getPassword())) {
+        if (checkPw(bankAccountDto.getPassword(), bankAccountEntity.getPassword())) {
             int balance = bankAccountEntity.getBalance();
             // 잔고 확인 후 잔고 부족하면 exception
             if (balance == 0 || balance < bankAccountDto.getWithdrawalFee()) {
@@ -113,10 +115,10 @@ public class Depo_Withdrawal_Service {
             balance -= bankAccountDto.getWithdrawalFee();
 
             bankAccountEntity.setBalance(balance);
-            userEntity.setBalance(balance);
+            // userEntity.setBalance(balance);
 
             bankAccountRepository.save(bankAccountEntity);
-            userRepository.save(userEntity);
+            // userRepository.save(userEntity);
 
         } else {
             throw new CustomException("비밀번호가 일치하지 않습니다.", ErrorCode.PASSWORD_INCORRECT);

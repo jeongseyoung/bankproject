@@ -96,7 +96,7 @@ public class SignUpService {
                 .email(userEntity.getEmail())
                 .phone(userEntity.getPhone())
                 .account(userEntity.getAccount())
-                .balance(userEntity.getBalance())
+                // .balance(userEntity.getBalance())
                 .signUpDate(userEntity.getSignUpDate())
                 .build();
         return userDto;
