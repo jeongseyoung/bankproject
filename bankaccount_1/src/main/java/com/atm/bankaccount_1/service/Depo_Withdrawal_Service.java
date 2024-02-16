@@ -33,7 +33,7 @@ public class Depo_Withdrawal_Service {
         UserEntity A = findAccount_UserEntity(bankAccountDto.getMyaccount());
         UserEntity B = findAccount_UserEntity(bankAccountDto.getOpponent_account());
 
-        // try {
+        // try { //비밀번호 체크 -> 틀리면 exception
         if (checkPw(bankAccountDto.getPassword(), person_A.getPassword())) {
             int person_A_balance = person_A.getBalance();
             int person_B_balance = person_B.getBalance();
@@ -42,6 +42,11 @@ public class Depo_Withdrawal_Service {
             if (person_A.getBalance() == 0 || person_A.getBalance() < bankAccountDto.getTransferFee()) {
                 throw new CustomException("잔고 부족", ErrorCode.INSUFFICENT_BALANCE);
             }
+            /*
+             * A통장에서 B통장으로 이체이므로
+             * A계좌 - 이체요청금액
+             * B계좌 + 이체요청금액
+             */
             person_A_balance -= bankAccountDto.getTransferFee();
             person_B_balance += bankAccountDto.getTransferFee();
 
@@ -68,7 +73,6 @@ public class Depo_Withdrawal_Service {
 
     // 입금
     public BankAccountDto deposit(BankAccountDto bankAccountDto) {
-        System.out.println("deposit: ");
         BankAccountEntity bankAccountEntity = findAccount_BankAccountEntity(bankAccountDto.getMyaccount());
         UserEntity userEntity = findAccount_UserEntity(bankAccountDto.getMyaccount());
 
