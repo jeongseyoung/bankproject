@@ -26,14 +26,19 @@ public class Depo_Withdrawal_Controller {
         return new ResponseEntity<BankAccountDto>(
                 depo_withdrawal_Service.transfer(bankAccountDto), HttpStatus.OK);
     }
+
     // 입금
+    @PostMapping("/deposit")
+    public ResponseEntity<BankAccountDto> deposit(@RequestBody BankAccountDto bankAccountDto) {
+        return new ResponseEntity<BankAccountDto>(depo_withdrawal_Service.deposit(bankAccountDto),
+                HttpStatus.OK);
+    }
 
     // 출금
-    // @PostMapping("/withdrawal")
-    // public ResponseEntity<BankAccountDto> withdrawal(@RequestBody BankAccountDto
-    // bankAccountDto) {
-    // return new
-    // ResponseEntity<BankAccountDto>(depo_withdrawal_Service.withdrawal(bankAccountDto),
-    // HttpStatus.OK);
-    // }
+    @PostMapping("/withdrawal")
+    public ResponseEntity<BankAccountDto> withdrawal(@RequestBody BankAccountDto bankAccountDto) {
+        System.out.println("bankAccountDto: " + bankAccountDto.getMyaccount());
+        return new ResponseEntity<BankAccountDto>(depo_withdrawal_Service.withdrawal(bankAccountDto),
+                HttpStatus.OK);
+    }
 }
