@@ -72,6 +72,9 @@ public class Depo_Withdrawal_Service {
     }
 
     // 입금
+    @Transactional(rollbackFor = {
+            Exception.class, CustomException.class
+    })
     public BankAccountDto deposit(BankAccountDto bankAccountDto) {
         BankAccountEntity bankAccountEntity = findAccount_BankAccountEntity(bankAccountDto.getMyaccount());
         UserEntity userEntity = findAccount_UserEntity(bankAccountDto.getMyaccount());
@@ -145,7 +148,7 @@ public class Depo_Withdrawal_Service {
     public BankAccountDto mapToBankAccountDto(BankAccountEntity bankAccountEntity) {
         BankAccountDto bankAccountDto = BankAccountDto.builder()
                 .myaccount(bankAccountEntity.getAccount())
-                .transferFee(bankAccountEntity.getTransfer()) // ?
+                .transferFee(bankAccountEntity.getTransfer())
                 .depositFee(bankAccountEntity.getDeposit())
                 .withdrawalFee(bankAccountEntity.getWithdrawal())
                 .build();

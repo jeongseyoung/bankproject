@@ -20,7 +20,7 @@ public class Depo_Withdrawal_Controller {
 
     private final Depo_Withdrawal_Service depo_withdrawal_Service;
 
-    // 이체
+    // 이체, 송금
     @PostMapping("/transfer")
     public ResponseEntity<BankAccountDto> transfer(@RequestBody BankAccountDto bankAccountDto) {
         return new ResponseEntity<BankAccountDto>(
