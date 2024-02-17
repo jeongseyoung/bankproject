@@ -40,4 +40,9 @@ public class BankAccountEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
+
+    // @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bankmain_id")
+    private BankMainEntity bankMainEntity;
 }

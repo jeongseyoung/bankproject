@@ -1,6 +1,9 @@
 package com.atm.bankaccount_1.entity;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -28,12 +31,25 @@ public class BankMainEntity {
     @Id
     @GeneratedValue
     private int id;
-    private String admin;
+    private String admin; // admin
     private String password;
     private String totalAmount; // 은행 총 자산
 
-    @OneToMany // (mappedBy = "bankMainEntity", cascade = CascadeType.ALL)
-    List<BankAccountEntity> bankAccountEntities;
-    @OneToMany
-    List<UserEntity> userEntities;
+    // @JsonIgnore
+    @OneToMany(mappedBy = "bankMainEntity", cascade = CascadeType.ALL)
+    List<BankAccountEntity> bankAccountEntities = new ArrayList<BankAccountEntity>();
+
+    public void addBankAccountEntity(BankAccountEntity bankAccountEntity) {
+        bankAccountEntity.setBankMainEntity(this);
+        this.bankAccountEntities.add(bankAccountEntity);
+    }
+
+    // @JsonIgnore
+    @OneToMany(mappedBy = "bankMainEntity", cascade = CascadeType.ALL)
+    List<UserEntity> userEntities = new ArrayList<UserEntity>();
+
+    public void addUserEntity(UserEntity userEntity) {
+        userEntity.setBankMainEntity(this);
+        this.userEntities.add(userEntity);
+    }
 }

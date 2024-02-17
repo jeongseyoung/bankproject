@@ -6,9 +6,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.atm.bankaccount_1.dto.UserDto;
 import com.atm.bankaccount_1.entity.BankAccountEntity;
+import com.atm.bankaccount_1.entity.BankMainEntity;
 import com.atm.bankaccount_1.entity.UserEntity;
 import com.atm.bankaccount_1.repository.BankAccountRepository;
+import com.atm.bankaccount_1.repository.BankMainRepository;
 import com.atm.bankaccount_1.repository.UserRepository;
+import com.atm.bankaccount_1.utils.exception.CustomException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,6 +24,7 @@ public class SignUpService {
 
     private final BankAccountRepository bankAccountRepository;
     private final UserRepository userRepository;
+    private final BankMainRepository bankMainRepository;
 
     /*
      * User생성(가입)과 계좌개설.
@@ -35,8 +39,7 @@ public class SignUpService {
         String account = createAccount();
         UserEntity userEntity = mapToUserEntity(userDto, pw);
         BankAccountEntity bankAccountEntity = mapToBankAccountEntity(userEntity, pw);
-
-        // stream?
+        // 계좌가 중복이면 다시 생성
         if (!checkAccount(account)) {
             userEntity.setAccount(account);
             bankAccountEntity.setAccount(account);
@@ -45,7 +48,13 @@ public class SignUpService {
             userEntity.setAccount(account);
             bankAccountEntity.setAccount(account);
         }
+        // 은행에서 모든계좌, 모든유저를 관리해야하므로.
+        BankMainEntity bankMainEntity = bankMainRepository.findById(1).get();
+        bankMainEntity.addBankAccountEntity(bankAccountEntity);
+        bankMainEntity.addUserEntity(userEntity);
+
         bankAccountRepository.save(bankAccountEntity);
+        bankMainRepository.save(bankMainEntity);
 
         return mapToUserDto(userRepository.save(userEntity));
     }
@@ -116,5 +125,16 @@ public class SignUpService {
     // 비밀번호 암호화
     public String encodePassword(String pw) {
         return BCrypt.hashpw(pw, BCrypt.gensalt());
+    }
+
+    /*
+     * 관리자 생성
+     */
+    public BankMainEntity signupAdmin(BankMainEntity bankMainEntity) {
+        BankMainEntity Admin = BankMainEntity.builder()
+                .admin("admin")
+                .password(encodePassword("admin"))
+                .build();
+        return Admin;
     }
 }

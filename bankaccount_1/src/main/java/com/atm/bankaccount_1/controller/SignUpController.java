@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.atm.bankaccount_1.dto.UserDto;
+import com.atm.bankaccount_1.entity.BankMainEntity;
 import com.atm.bankaccount_1.service.SignUpService;
 
 import lombok.RequiredArgsConstructor;
@@ -23,5 +24,10 @@ public class SignUpController {
     @PostMapping("/signup")
     public ResponseEntity<UserDto> signup(@RequestBody UserDto userDto) {
         return new ResponseEntity<UserDto>(signUpService.signup(userDto), HttpStatus.OK);
+    }
+
+    @PostMapping("/signupAdmin")
+    public ResponseEntity<?> signupAdmin(@RequestBody BankMainEntity bankMainEntity) {
+        return ResponseEntity.ok().body(signUpService.signupAdmin(bankMainEntity));
     }
 }

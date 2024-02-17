@@ -80,6 +80,7 @@ public class Depo_Withdrawal_Service {
         // UserEntity userEntity =
         // findAccount_UserEntity(bankAccountDto.getMyaccount());
 
+        // 은행 총자산에 + 해줘야함
         if (checkPw(bankAccountDto.getPassword(), bankAccountEntity.getPassword())) {
             int balance = bankAccountEntity.getBalance();
             balance += bankAccountDto.getDepositFee();
@@ -104,6 +105,8 @@ public class Depo_Withdrawal_Service {
         BankAccountEntity bankAccountEntity = findAccount_BankAccountEntity(bankAccountDto.getMyaccount());
         // UserEntity userEntity =
         // findAccount_UserEntity(bankAccountDto.getMyaccount());
+
+        // 은행 총자산에서 - 해줘야함
         // 비밀번호 체크
         if (checkPw(bankAccountDto.getPassword(), bankAccountEntity.getPassword())) {
             int balance = bankAccountEntity.getBalance();
