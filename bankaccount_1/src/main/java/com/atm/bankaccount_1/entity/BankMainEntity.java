@@ -33,7 +33,7 @@ public class BankMainEntity {
     private int id;
     private String admin; // admin
     private String password;
-    private String totalAmount; // 은행 총 자산
+    private Integer totalAmount; // 은행 총 자산
 
     // @JsonIgnore
     @OneToMany(mappedBy = "bankMainEntity", cascade = CascadeType.ALL)

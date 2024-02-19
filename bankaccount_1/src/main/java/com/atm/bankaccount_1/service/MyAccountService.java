@@ -21,7 +21,7 @@ public class MyAccountService {
     private final BankAccountRepository bankAccountRepository;
 
     /*
-     * 입출금내역도 해야됨
+     * 입출금내역 만들기~
      */
     public UserDto myaccount(UserDto userDto) {
         BankAccountEntity bankAccountEntity = new BankAccountEntity();
@@ -40,10 +40,6 @@ public class MyAccountService {
         return mapToUserDto(userEntity, bankAccountEntity);
     }
 
-    public boolean checkPw(String pw, String hashedPw) {
-        return BCrypt.checkpw(pw, hashedPw);
-    }
-
     public UserDto mapToUserDto(UserEntity userEntity, BankAccountEntity bankAccountEntity) {
         UserDto setUserDto = UserDto.builder()
                 .name(userEntity.getName())
@@ -53,6 +49,10 @@ public class MyAccountService {
                 .balance(bankAccountEntity.getBalance())
                 .build();
         return setUserDto;
+    }
+
+    public boolean checkPw(String pw, String hashedPw) {
+        return BCrypt.checkpw(pw, hashedPw);
     }
 
 }

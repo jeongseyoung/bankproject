@@ -1,5 +1,7 @@
 package com.atm.bankaccount_1.dto;
 
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,4 +22,6 @@ public class BankAccountDto {
     private int depositFee; // 입금
     private int withdrawalFee; // 출금
     private int balance; // 잔고
+
+    private Date thisDate;
 }

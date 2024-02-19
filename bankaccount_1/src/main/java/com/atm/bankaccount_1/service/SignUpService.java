@@ -11,7 +11,6 @@ import com.atm.bankaccount_1.entity.UserEntity;
 import com.atm.bankaccount_1.repository.BankAccountRepository;
 import com.atm.bankaccount_1.repository.BankMainRepository;
 import com.atm.bankaccount_1.repository.UserRepository;
-import com.atm.bankaccount_1.utils.exception.CustomException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -49,7 +48,7 @@ public class SignUpService {
             bankAccountEntity.setAccount(account);
         }
         // 은행에서 모든계좌, 모든유저를 관리해야하므로.
-        BankMainEntity bankMainEntity = bankMainRepository.findById(1).get();
+        BankMainEntity bankMainEntity = bankMainRepository.findById(52).get();
         bankMainEntity.addBankAccountEntity(bankAccountEntity);
         bankMainEntity.addUserEntity(userEntity);
 
@@ -135,6 +134,7 @@ public class SignUpService {
                 .admin("admin")
                 .password(encodePassword("admin"))
                 .build();
+        bankMainRepository.save(Admin);
         return Admin;
     }
 }
