@@ -1,0 +1,102 @@
+.container2 {
+  /*변수 만들기*/
+  --color-pirmary: #09ecc3;
+  --color-pirmary-dark: #05c7a3;
+  --color-secondary: #252c6a;
+  --color-error: #cc3333;
+  --color-success: #4bb544;
+  --border-radius: 4px;
+  /* padding: 10px 10px 10px 20px; */
+  margin: 0;
+  height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  /* background: var(--color-pirmary); */
+  /* background: url(./) */
+  margin: 1rem;
+  padding: 2rem;
+}
+
+.form--hidden {
+  display: none;
+}
+
+.form > *:first-child {
+  margin-top: 0;
+}
+.form > *:last-child {
+  margin-bottom: 0;
+}
+.form__title {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+.form__message {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.form__message--success {
+  color: var(--color-success);
+}
+.form__message--error {
+  color: var(--color-error);
+}
+.form__input-group {
+  margin-bottom: 1rem;
+}
+.form__input {
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  border-radius: var(--border-radius);
+  border: 0.5px solid #707070;
+  outline: none;
+  background: #e7ebd0;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.form__input:focus {
+  border-color: var(--color-pirmary);
+  /* background: #ffffff; */
+}
+.form__input--error {
+  color: var(--color-error);
+  border-color: var(--color-error);
+}
+.form__input-error-message {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--color-error);
+}
+
+.form__button {
+  width: 100%;
+  padding: 1rem 2rem;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: black;
+  border: none;
+  border-radius: var(--border-radius);
+  outline: none;
+  cursor: pointer;
+  background-color: var(--color-pirmary);
+}
+
+.form__button:hover {
+  background-color: var(--color-pirmary-dark);
+}
+.form__button:active {
+  transform: scale(0.98);
+}
+
+.form__text {
+  text-align: center;
+}
+
+.form__link {
+  color: var(--color-secondary);
+  text-decoration: underline;
+}

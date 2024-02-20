@@ -1,0 +1,37 @@
+.content-table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  min-width: 800px;
+  border-radius: 10px 10px 0 0; /* 끝에 둥글게 */
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); /* 그림자 */
+}
+
+.content-table thead tr {
+  background-color: rgb(243, 223, 192);
+  color: #2e2727;
+  text-align: left;
+  font-weight: bold;
+}
+.content-table th,
+.content-table td {
+  padding: 12px 15px;
+}
+.content-table tbody tr {
+  border-bottom: 1px solid #ddddddb6;
+}
+
+.content-table tbody tr:nth-of-type(even) {
+  background-color: #eed276e7;
+}
+
+.content-table tbody tr:last-of-type {
+  border-bottom: 2px solid rgb(241, 204, 147);
+}
+
+/* 이거 왜 안되지? */
+.content-table tbody tr.active-row {
+  font-weight: bold;
+  color: aqua;
+}
