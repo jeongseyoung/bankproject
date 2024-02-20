@@ -41,12 +41,10 @@ public class Depo_Withdrawal_Service {
         BankAccountEntity person_B = findAccount_BankAccountEntity(bankAccountDto.getOpponent_account());
 
         T_D_W_ListEntity t_d_w_ListEntity = mapToT_D_W_ListEntity(bankAccountDto);
-        // System.out.println("t_d_w_ListEntity: " +
-        // t_d_w_ListEntity.getBankAccountEntity().getId());
         t_d_w_ListEntity.setBankAccountEntity(person_A);
         t_d_w_ListEntity.setDateOfTransfer(today);
 
-        // try { //비밀번호 체크 -> 틀리면 exception
+        // 비밀번호 체크 -> 틀리면 exception
         if (checkPw(bankAccountDto.getPassword(), person_A.getPassword())) {
             int person_A_balance = person_A.getBalance();
             int person_B_balance = person_B.getBalance();
@@ -72,10 +70,6 @@ public class Depo_Withdrawal_Service {
         } else {
             throw new CustomException("비밀번호가 일치하지 않습니다.", ErrorCode.PASSWORD_INCORRECT);
         }
-        // } catch (Exception e) {
-        // throw new CustomException("이체 실패, 사유: " + e.getMessage(),
-        // ErrorCode.TRANSFER_FAILED);
-        // }
 
         return mapToBankAccountDto(person_A);
     }
@@ -123,6 +117,7 @@ public class Depo_Withdrawal_Service {
         if (checkPw(bankAccountDto.getPassword(), bankAccountEntity.getPassword())) {
             int balance = bankAccountEntity.getBalance();
             Integer totalAmount = bankMainEntity.getTotalAmount();
+
             // 잔고 확인 후 잔고 부족하면 exception
             if (balance == 0 || balance < bankAccountDto.getWithdrawalFee()) {
                 throw new CustomException("잔고 부족", ErrorCode.INSUFFICENT_BALANCE);
@@ -133,7 +128,6 @@ public class Depo_Withdrawal_Service {
 
             bankAccountEntity.setBalance(balance);
             bankMainEntity.setTotalAmount(totalAmount);
-            // userEntity.setBalance(balance);
 
             bankAccountRepository.save(bankAccountEntity);
             bankMainRepository.save(bankMainEntity);
